@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="StingrayLoadBalancer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="StingrayConfiguration" Type="StingrayLoadBalancer.Configuration" Scope="Application">
+      <Value Profile="(Default)">
+          &lt;StingrayConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+            &lt;WebFarmSettings&gt;
+              &lt;WebFarmName&gt;LoadGenerator&lt;/WebFarmName&gt;
+              &lt;PoolName&gt;ServerPool_TestWebServers&lt;/PoolName&gt;
+              &lt;TCPPort&gt;80&lt;/TCPPort&gt;
+              &lt;ControlApiUrl&gt;https://sr-si-stmlb01:9090/soap&lt;/ControlApiUrl&gt;
+              &lt;ControlApiUsername&gt;WFF&lt;/ControlApiUsername&gt;
+              &lt;ControlApiPassword&gt;G3slo1&lt;/ControlApiPassword&gt;
+              &lt;DrainingPeriod&gt;600&lt;/DrainingPeriod&gt;
+            &lt;/WebFarmSettings&gt;
+          &lt;/StingrayConfiguration&gt;
+        </Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

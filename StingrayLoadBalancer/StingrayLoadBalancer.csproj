@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3C945989-3069-452F-B74A-3BBA880AC860}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StingrayLoadBalancer</RootNamespace>
+    <AssemblyName>StingrayLoadBalancer</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\StingrayLoadBalancer.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\StingrayLoadBalancer.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Farm, Version=7.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\IIS\Microsoft Web Farm Framework\Microsoft.Web.Farm.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AllowSelfSignedCertificatePolicy.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="DrainNodeGateContext.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="LoadBalancer.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="Pool.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="StingrayAddServerOperationProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StingrayDisableLoadBalancingOperationProvider.cs" />
+    <Compile Include="StingrayEnableLoadBalancingOperationProvider.cs" />
+    <Compile Include="StingrayException.cs" />
+    <Compile Include="StingrayRemoveServerOperationProvider.cs" />
+    <Compile Include="Web References\StingrayAPI.Pool\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="BaseAsyncResult.cs" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\Pool.wsdl" />
+    <None Include="Web References\StingrayAPI.Pool\PoolAutoscaleIpstouse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\PoolLoadBalancingAlgorithm.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\PoolPriorityValueDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\PoolUDPAcceptFrom.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\PoolWeightingsDefinition.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\StingrayAPI.Pool\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="wsdl\AFM.wsdl" />
+    <None Include="wsdl\AlertCallback.wsdl" />
+    <None Include="wsdl\Alerting.Action.wsdl" />
+    <None Include="wsdl\Alerting.EventType.wsdl" />
+    <None Include="wsdl\Catalog.Aptimizer.Profile.wsdl" />
+    <None Include="wsdl\Catalog.Authenticators.wsdl" />
+    <None Include="wsdl\Catalog.Bandwidth.wsdl" />
+    <None Include="wsdl\Catalog.JavaExtension.wsdl" />
+    <None Include="wsdl\Catalog.Monitor.wsdl" />
+    <None Include="wsdl\Catalog.Persistence.wsdl" />
+    <None Include="wsdl\Catalog.Protection.wsdl" />
+    <None Include="wsdl\Catalog.Rate.wsdl" />
+    <None Include="wsdl\Catalog.Rule.wsdl" />
+    <None Include="wsdl\Catalog.SLM.wsdl" />
+    <None Include="wsdl\Catalog.SSL.CertificateAuthorities.wsdl" />
+    <None Include="wsdl\Catalog.SSL.Certificates.wsdl" />
+    <None Include="wsdl\Catalog.SSL.ClientCertificates.wsdl" />
+    <None Include="wsdl\Catalog.SSL.DNSSEC.wsdl" />
+    <None Include="wsdl\Conf.Extra.wsdl" />
+    <None Include="wsdl\Conf.Extra_1_0.wsdl" />
+    <None Include="wsdl\Diagnose.wsdl" />
+    <None Include="wsdl\Diagnose_1_0.wsdl" />
+    <None Include="wsdl\GLB.Service.wsdl" />
+    <None Include="wsdl\GlobalSettings.wsdl" />
+    <None Include="wsdl\Location.wsdl" />
+    <None Include="wsdl\Pool.wsdl" />
+    <None Include="wsdl\System.AccessLogs.wsdl" />
+    <None Include="wsdl\System.Backups.wsdl" />
+    <None Include="wsdl\System.Cache.wsdl" />
+    <None Include="wsdl\System.Cache_1_0.wsdl" />
+    <None Include="wsdl\System.Cache_1_1.wsdl" />
+    <None Include="wsdl\System.CloudCredentials.wsdl" />
+    <None Include="wsdl\System.Connections.wsdl" />
+    <None Include="wsdl\System.LicenseKeys.wsdl" />
+    <None Include="wsdl\System.Log.wsdl" />
+    <None Include="wsdl\System.MachineInfo.wsdl" />
+    <None Include="wsdl\System.Management.wsdl" />
+    <None Include="wsdl\System.RequestLogs.wsdl" />
+    <None Include="wsdl\System.Stats.wsdl" />
+    <None Include="wsdl\System.Steelhead.wsdl" />
+    <None Include="wsdl\TrafficIPGroups.wsdl" />
+    <None Include="wsdl\Users.wsdl" />
+    <None Include="wsdl\VirtualServer.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="C:\Users\aleksander.tusek\Documents\Visual Studio 2012\Projects\StingrayLoadBalancer\StingrayLoadBalancer\wsdl\Pool.wsdl">
+      <UrlBehavior>Static</UrlBehavior>
+      <RelPath>Web References\StingrayAPI.Pool\</RelPath>
+      <UpdateFromURL>C:\Users\aleksander.tusek\Documents\Visual Studio 2012\Projects\StingrayLoadBalancer\StingrayLoadBalancer\wsdl\Pool.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>StingrayControlAPIUrl</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
