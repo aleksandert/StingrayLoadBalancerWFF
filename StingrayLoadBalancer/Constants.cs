@@ -7,5 +7,9 @@ namespace StingrayLoadBalancer
     class Constants
     {
         public const string ProviderNamePrefix = "Stingray";
+
+		private Constants() {
+
+		}
     }
 }

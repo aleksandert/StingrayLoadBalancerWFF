@@ -6,48 +6,50 @@ using System.Net;
 
 namespace StingrayLoadBalancer
 {
-    [WebFarmOperationProvider]
-    public class StingrayRemoveServerOperationProvider : WebFarmOperationProvider
-    {
-        public override string Name
-        {
-            get
-            {
-                return Constants.ProviderNamePrefix + RemoveServerOperationProvider.ProviderName;
-            }
-        }
+	[WebFarmOperationProvider]
+	public class StingrayRemoveServerOperationProvider : WebFarmOperationProvider
+	{
+		public override string Name
+		{
+			get
+			{
+				return Constants.ProviderNamePrefix + RemoveServerOperationProvider.ProviderName;
+			}
+		}
 
-        public override IEnumerable<OperationParameter> Parameters
-        {
-            get
-            {
-                yield return new OperationParameter("Server", "Server address", typeof(ServerContext));
-            }
-        }
+		public override IEnumerable<OperationParameter> Parameters
+		{
+			get
+			{
+				yield return new OperationParameter("Server", "Server address", typeof(ServerContext));
+			}
+		}
 
-        public override ProviderDisposition Disposition
-        {
-            get
-            {
-                return ProviderDisposition.Hidden;
-            }
-        }
+		public override ProviderDisposition Disposition
+		{
+			get
+			{
+				return ProviderDisposition.Hidden;
+			}
+		}
 
-        public override object RunOperation(WebFarmOperationContext operationContext)
-        {
-            ServerContext serverContext = (ServerContext)operationContext.Options.Parameters[0].Value;
+		public override object RunOperation(WebFarmOperationContext operationContext)
+		{
+			if (operationContext == null) throw new ArgumentNullException(nameof(operationContext));
 
-            var config = Helpers.GetConfigSettings(serverContext.WebFarm.Name);
+			ServerContext serverContext = (ServerContext)operationContext.Options.Parameters[0].Value;
 
-            var node = Helpers.GetNodeName(serverContext.Address, config.TCPPort);
+			var config = Helpers.GetConfigSettings(serverContext.WebFarm.Name);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Removing node {0} from pool {1}.", node, config.PoolName)));
+			var node = Helpers.GetNodeName(serverContext.Address, config.TCPPort);
 
-            LoadBalancer.RemoveNode(config, node);
+			serverContext.TraceInfo("Removing node '{0}' from pool '{1}'.", node, config.PoolName);
+					   
+			LoadBalancer.RemoveNode(config, node);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Node {0} added removed from pool {1}.", node, config.PoolName)));
+			serverContext.TraceInfo("Node '{0}' removed from pool '{1}'.", node, config.PoolName);
 
-            return null;
-        }
-    }
+			return null;
+		}
+	}
 }

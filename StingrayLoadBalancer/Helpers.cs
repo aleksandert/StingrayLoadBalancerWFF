@@ -10,7 +10,7 @@ namespace StingrayLoadBalancer
         public static WebFarmSettings GetConfigSettings(string webFarm)
         {
             return Properties.Settings.Default.StingrayConfiguration
-                .Where(x => x.WebFarmName.Equals(webFarm, StringComparison.InvariantCultureIgnoreCase))
+                .Where(x => x.WebFarmName.Equals(webFarm, StringComparison.OrdinalIgnoreCase))
                 .FirstOrDefault();
         }
 

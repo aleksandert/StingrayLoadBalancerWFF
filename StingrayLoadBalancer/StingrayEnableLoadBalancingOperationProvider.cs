@@ -5,48 +5,50 @@ using Microsoft.Web.Farm;
 
 namespace StingrayLoadBalancer
 {
-    [WebFarmOperationProvider]
-    public class StingrayEnableLoadBalancingOperationProvider : WebFarmOperationProvider
-    {
-        public override string Name
-        {
-            get
-            {
-                return Constants.ProviderNamePrefix + EnableLoadBalancingOperationProvider.ProviderName;
-            }
-        }
+	[WebFarmOperationProvider]
+	public class StingrayEnableLoadBalancingOperationProvider : WebFarmOperationProvider
+	{
+		public override string Name
+		{
+			get
+			{
+				return Constants.ProviderNamePrefix + EnableLoadBalancingOperationProvider.ProviderName;
+			}
+		}
 
-        public override IEnumerable<OperationParameter> Parameters
-        {
-            get
-            {
-                yield return new OperationParameter("Server", "Server address", typeof(ServerContext));
-            }
-        }
+		public override IEnumerable<OperationParameter> Parameters
+		{
+			get
+			{
+				yield return new OperationParameter("Server", "Server address", typeof(ServerContext));
+			}
+		}
 
-        public override ProviderDisposition Disposition
-        {
-            get
-            {
-                return ProviderDisposition.Hidden;
-            }
-        }
+		public override ProviderDisposition Disposition
+		{
+			get
+			{
+				return ProviderDisposition.Hidden;
+			}
+		}
 
-        public override object RunOperation(WebFarmOperationContext operationContext)
-        {
-            ServerContext serverContext = (ServerContext)operationContext.Options.Parameters[0].Value;
+		public override object RunOperation(WebFarmOperationContext operationContext)
+		{
+			if (operationContext == null) throw new ArgumentNullException(nameof(operationContext));
 
-            var config = Helpers.GetConfigSettings(serverContext.WebFarm.Name);
+			ServerContext serverContext = (ServerContext)operationContext.Options.Parameters[0].Value;
 
-            var node = Helpers.GetNodeName(serverContext.Address, config.TCPPort);
+			var config = Helpers.GetConfigSettings(serverContext.WebFarm.Name);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Enabling node {0} in pool {1}.", node, config.PoolName)));
+			var node = Helpers.GetNodeName(serverContext.Address, config.TCPPort);
 
-            LoadBalancer.EnableNode(config, node);
+			serverContext.TraceInfo("Enabling node {0} in pool {1}.", node, config.PoolName);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Node {0} enabled in pool {1}.", node, config.PoolName)));
+			LoadBalancer.EnableNode(config, node);
 
-            return null;
-        }
-    }
+			serverContext.TraceInfo("Node {0} enabled in pool {1}.", node, config.PoolName);
+
+			return null;
+		}
+	}
 }

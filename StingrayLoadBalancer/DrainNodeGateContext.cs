@@ -56,7 +56,7 @@ namespace StingrayLoadBalancer
             //start node draining
             LoadBalancer.DrainNode(this._config, node);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Draining started for node {0} in pool {1}. Timeout: {2}.", node, _config.PoolName, _config.DrainingPeriod)));
+            serverContext.TraceInfo("Draining started for node {0} in pool {1}. Timeout: {2}.", node, _config.PoolName, _config.DrainingPeriod);
 
             var drainingNode = new DrainingNode() { Server = serverContext, Callback = callback };
 
@@ -77,11 +77,11 @@ namespace StingrayLoadBalancer
 
             if (isDrained)
             {
-                node.Server.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Draining finished for node {0} in pool {1}.Timeout: {2} secs,  Since Last Used: {3} secs.", nodeName, _config.PoolName, _config.DrainingPeriod, lastUsed)));
+                node.Server.TraceInfo("Draining finished for node {0} in pool {1}.Timeout: {2} secs,  Since Last Used: {3} secs.", nodeName, _config.PoolName, _config.DrainingPeriod, lastUsed);
             }
             else
             {
-                node.Server.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Still draining node {0} in pool {1}. Timeout: {2} secs,  Since Last Used: {3} secs.", nodeName, _config.PoolName, _config.DrainingPeriod, lastUsed)));
+                node.Server.TraceInfo("Still draining node {0} in pool {1}. Timeout: {2} secs,  Since Last Used: {3} secs.", nodeName, _config.PoolName, _config.DrainingPeriod, lastUsed);
             }
 
             return isDrained;

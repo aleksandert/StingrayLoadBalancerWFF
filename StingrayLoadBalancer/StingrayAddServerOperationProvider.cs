@@ -42,11 +42,11 @@ namespace StingrayLoadBalancer
 
             var node = Helpers.GetNodeName(serverContext.Address, config.TCPPort);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Adding node {0} to pool {1}.", node, config.PoolName)));
+            serverContext.TraceInfo("Adding node {0} to pool {1}.", node, config.PoolName);
 
             LoadBalancer.AddNode(config, node);
 
-            serverContext.TraceMessage(new TraceMessage(System.Diagnostics.TraceLevel.Info, string.Format("Node {0} added to pool {1}.", node, config.PoolName)));
+            serverContext.TraceInfo("Node {0} added to pool {1}.", node, config.PoolName);
 
             return null;
         }    

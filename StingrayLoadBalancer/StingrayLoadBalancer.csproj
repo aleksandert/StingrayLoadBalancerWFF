@@ -52,6 +52,8 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -69,14 +71,20 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Web.Farm, Version=7.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\IIS\Microsoft Web Farm Framework\Microsoft.Web.Farm.dll</HintPath>
+      <HintPath>..\Lib\Microsoft.Web.Farm.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -86,6 +94,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DrainNodeGateContext.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="LoadBalancer.cs" />
     <Compile Include="Node.cs" />
@@ -99,42 +108,21 @@
     <Compile Include="StingrayAddServerOperationProvider.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StingrayAPI\Pool.cs" />
     <Compile Include="StingrayDisableLoadBalancingOperationProvider.cs" />
     <Compile Include="StingrayEnableLoadBalancingOperationProvider.cs" />
     <Compile Include="StingrayException.cs" />
     <Compile Include="StingrayRemoveServerOperationProvider.cs" />
-    <Compile Include="Web References\StingrayAPI.Pool\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
-    </Compile>
     <Compile Include="BaseAsyncResult.cs" />
+    <None Include="..\key.pfx">
+      <Link>key.pfx</Link>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\Pool.wsdl" />
-    <None Include="Web References\StingrayAPI.Pool\PoolAutoscaleIpstouse.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\PoolLoadBalancingAlgorithm.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\PoolPriorityValueDefinition.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\PoolUDPAcceptFrom.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\PoolWeightingsDefinition.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\StingrayAPI.Pool\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="wsdl\AFM.wsdl" />
     <None Include="wsdl\AlertCallback.wsdl" />
@@ -179,25 +167,6 @@
     <None Include="wsdl\TrafficIPGroups.wsdl" />
     <None Include="wsdl\Users.wsdl" />
     <None Include="wsdl\VirtualServer.wsdl" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="C:\Users\aleksander.tusek\Documents\Visual Studio 2012\Projects\StingrayLoadBalancer\StingrayLoadBalancer\wsdl\Pool.wsdl">
-      <UrlBehavior>Static</UrlBehavior>
-      <RelPath>Web References\StingrayAPI.Pool\</RelPath>
-      <UpdateFromURL>C:\Users\aleksander.tusek\Documents\Visual Studio 2012\Projects\StingrayLoadBalancer\StingrayLoadBalancer\wsdl\Pool.wsdl</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>StingrayControlAPIUrl</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

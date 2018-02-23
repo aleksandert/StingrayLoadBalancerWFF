@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StingrayLoadBalancer.StingrayAPI.Pool 
+namespace StingrayLoadBalancer.StingrayAPI 
 {
     public partial class Pool
     {

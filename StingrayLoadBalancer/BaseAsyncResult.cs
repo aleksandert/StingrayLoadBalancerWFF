@@ -7,85 +7,54 @@ using System.Threading;
 
 namespace StingrayLoadBalancer
 {
-    internal abstract class BaseAsyncResult : IAsyncResult, IDisposable
-    {
-        // Fields
-        private AsyncCallback _callback;
-        private bool _isComplete;
-        private object _state;
-        private ManualResetEvent _waitHandle = new ManualResetEvent(false);
+	internal abstract class BaseAsyncResult : IAsyncResult, IDisposable
+	{
+		private AsyncCallback _callback;
+		private bool _isComplete;
+		private object _state;
+		private ManualResetEvent _waitHandle = new ManualResetEvent(false);
 
-        // Methods
-        public BaseAsyncResult(AsyncCallback callback, object state)
-        {
-            this._callback = callback;
-            this._state = state;
-        }
+		public object AsyncState { get { return this._state; } }
+		public WaitHandle AsyncWaitHandle { get { return this._waitHandle; } }
+		public bool CompletedSynchronously { get { return false; } }
+		public bool IsCompleted { get { return this._isComplete; } }
 
-        public void Dispose()
-        {
-            try
-            {
-                this.Dispose(true);
-            }
-            finally
-            {
-                if (this._waitHandle != null)
-                {
-                    this._waitHandle.Close();
-                    this._waitHandle = null;
-                }
-                GC.SuppressFinalize(this);
-            }
-        }
+		public BaseAsyncResult(AsyncCallback callback, object state)
+		{
+			this._callback = callback;
+			this._state = state;
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-        }
+		public void Dispose()
+		{
+			try
+			{
+				this.Dispose(true);
+			}
+			finally
+			{
+				
+				GC.SuppressFinalize(this);
+			}
+		}
 
-        protected void SetComplete()
-        {
-            this._isComplete = true;
-            this._waitHandle.Set();
-            if (this._callback != null)
-            {
-                this._callback(this);
-            }
-        }
+		protected virtual void Dispose(bool disposing)
+		{
+			if (this._waitHandle != null)
+			{
+				this._waitHandle.Close();
+				this._waitHandle = null;
+			}
+		}
 
-        // Properties
-        public object AsyncState
-        {
-            get
-            {
-                return this._state;
-            }
-        }
-
-        public WaitHandle AsyncWaitHandle
-        {
-            get
-            {
-                return this._waitHandle;
-            }
-        }
-
-        public bool CompletedSynchronously
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        public bool IsCompleted
-        {
-            get
-            {
-                return this._isComplete;
-            }
-        }
-    }
-
-
+		protected void SetComplete()
+		{
+			this._isComplete = true;
+			this._waitHandle.Set();
+			if (this._callback != null)
+			{
+				this._callback(this);
+			}
+		}
+	}
 }

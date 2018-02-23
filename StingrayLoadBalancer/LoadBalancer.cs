@@ -6,10 +6,11 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace StingrayLoadBalancer
 {
-    public class LoadBalancer
+    public static class LoadBalancer
     {
         static LoadBalancer()
         {
@@ -67,14 +68,16 @@ namespace StingrayLoadBalancer
 
             if (!nodeExists)
             {
-                throw new StingrayException(string.Format("Pool {0} doesn't contain node {1}.", config.PoolName, nodeAddress));
+                throw new StingrayException(string.Format("Pool '{0}' doesn't contain node '{1}'.", config.PoolName, nodeAddress));
             }
 
         }
 
         public static void AddNode(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -86,7 +89,7 @@ namespace StingrayLoadBalancer
                     {
                         if (node.Equals(nodeAddress, StringComparison.Ordinal))
                         {
-                            Trace.TraceWarning("Pool {0} already contains {1}. No action needed.", poolName, nodeAddress);
+                            Trace.TraceWarning("Pool '{0}' already contains node '{1}'. No action needed.", poolName, nodeAddress);
                             return;
                         }
                     }
@@ -98,14 +101,16 @@ namespace StingrayLoadBalancer
                 }
                 catch (Exception e)
                 {
-                    throw new StingrayException(string.Format("Error adding server {0} to pool {1}.", nodeAddress, poolName), e);
+                    throw new StingrayException(string.Format(CultureInfo.CurrentCulture, "Error adding server {0} to pool {1}.", nodeAddress, poolName), e);
                 }
             }
         }
 
         public static void RemoveNode(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+            using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -126,7 +131,7 @@ namespace StingrayLoadBalancer
 
                     if (!nodeExists)
                     {
-                        Trace.TraceWarning("Pool {0} doesn't contain node {1}.", poolName, nodeAddress);
+                        Trace.TraceWarning("Pool '{0}' doesn't contain node '{1}'.", poolName, nodeAddress);
                         return;
                     }
 
@@ -143,7 +148,9 @@ namespace StingrayLoadBalancer
 
         public static void EnableNode(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -173,7 +180,9 @@ namespace StingrayLoadBalancer
 
         public static void DisableNode(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -201,7 +210,9 @@ namespace StingrayLoadBalancer
 
         public static void DrainNode(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -230,7 +241,9 @@ namespace StingrayLoadBalancer
 
         public static int GetNodeLastUsed(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 try
                 {
@@ -252,7 +265,9 @@ namespace StingrayLoadBalancer
 
         public static int GetConnections(WebFarmSettings config, string nodeAddress)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 try
                 {
@@ -274,8 +289,10 @@ namespace StingrayLoadBalancer
         }
 
         public static string[] GetEnabledNodes(WebFarmSettings config)
-        { 
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+        {
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 return proxy.getEnabledNodes(config.PoolName);
             }
@@ -283,7 +300,9 @@ namespace StingrayLoadBalancer
 
         public static string[] GetDisabledNodes(WebFarmSettings config)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 return proxy.getDisabledNodes(config.PoolName);
             }
@@ -291,7 +310,9 @@ namespace StingrayLoadBalancer
 
         public static string[] GetDrainingNodes(WebFarmSettings config)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 return proxy.getDrainingNodes(config.PoolName);
             } 
@@ -299,7 +320,9 @@ namespace StingrayLoadBalancer
 
         public static IEnumerable<Node> GetNodes(WebFarmSettings config)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 string poolName = config.PoolName;
 
@@ -329,7 +352,9 @@ namespace StingrayLoadBalancer
 
         public static string[] GetPoolNames(WebFarmSettings config)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 return proxy.getPoolNames();
             }
@@ -337,7 +362,9 @@ namespace StingrayLoadBalancer
 
         public static string[] GetAllNodes(WebFarmSettings config)
         {
-            using (var proxy = CreateProxy<StingrayAPI.Pool.Pool>(config))
+			if (config == null) throw new ArgumentNullException(nameof(config));
+
+			using (var proxy = CreateProxy<StingrayAPI.Pool>(config))
             {
                 var pool = new string[] { config.PoolName };
 

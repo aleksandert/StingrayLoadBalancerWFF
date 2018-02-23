@@ -53,7 +53,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StingrayLoadBalancer\StingrayLoadBalancer\StingrayLoadBalancer.csproj">
+    <ProjectReference Include="..\StingrayLoadBalancer\StingrayLoadBalancer.csproj">
       <Project>{3C945989-3069-452F-B74A-3BBA880AC860}</Project>
       <Name>StingrayLoadBalancer</Name>
     </ProjectReference>
